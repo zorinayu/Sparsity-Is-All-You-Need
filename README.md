@@ -2,7 +2,7 @@
 This repository provides the official implementation of SpargeAttn.
 
 **SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference**  
-Paper: [View Local PDF](assets/SpargeAttn_Paper.pdf) (To be appear in Arxiv)  
+Paper: https://arxiv.org/abs/2502.18137  
 Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen
 
 <!-- <img src="./assets/overview.png" width="95%" alt="overview."> -->
