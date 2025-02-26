@@ -74,8 +74,12 @@ The tuning and inference usage is similar to Cogvideo.
 ```
 @misc{zhang2025spargeattn,
       title={SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference}, 
-      author={Jintao Zhang and Chendong Xiang and Haofeng Huang and Haocheng Xi and Jia Wei and Jun Zhu and Jianfei Chen},
-      year={2025}
+      author={Jintao Zhang and Chendong Xiang and Haofeng Huang and Jia Wei and Haocheng Xi and Jun Zhu and Jianfei Chen},
+      year={2025},
+      eprint={2502.18137},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2502.18137}, 
 }
 
 @inproceedings{zhang2025sageattention,
