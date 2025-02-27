@@ -90,7 +90,7 @@ if __name__ == "__main__":
         os.environ["TUNE_MODE"] = ""  # disable tune mode
         transformer = CogVideoXTransformer3DModel.from_pretrained(
             "THUDM/CogVideoX-2b",
-            local_files_only=True,
+            local_files_only=False,
             subfolder="transformer",
             torch_dtype=dtype_,
         )
