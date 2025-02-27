@@ -56,6 +56,7 @@ The tuning and inference usage is similar to CogVideoX.
 
 ## Performance
 ![Local Image](./assets/exp_table.png)
+> **Note:** All experiments in this paper used SpargeAttn based on SageAttention. An updated implementation based on SageAttention2, is available now. It further offers a 30% speedup.
 
 <!-- <img src="./assets/more_mochi_example.png" width="60%" alt="End-to-end video generation on Mochi.">  
 
