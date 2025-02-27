@@ -27,16 +27,16 @@ python setup.py install   # or pip install -e .
 
 
 ## Avalible API
-- `spas_sage2_attn_meansim_cuda`: SpargeAttn based on SageAttention2.
+- `spas_sage2_attn_meansim_cuda`: SpargeAttn based on [SageAttention2](https://github.com/thu-ml/SageAttention).
 
-- `spas_sage_attn_meansim_cuda`: SpargeAttn based on SageAttention.
+- `spas_sage_attn_meansim_cuda`: SpargeAttn based on [SageAttention](https://github.com/thu-ml/SageAttention).
 
 
 
 ## Usage Examples
-### Cogvideo
+### CogVideoX
 
-Tune:  
+Tuning:  
 ```bash
 python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --tune
 ```
@@ -47,10 +47,10 @@ python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evalu
 ```
 
 > **Note:**
-We provide a pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allows you to run the inference script directly. However, for better performance in both speed and quality, we recommend re-tuning because the provided hyper-parameters is tuned with SpargeAttn based on SageAttention, whereas the default API is based on SageAttention2 now.
+We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow you to run the inference script directly. However, for better performance in both speed and quality, we recommend re-tuning because the provided hyper-parameters are tuned with SpargeAttn based on SageAttention, whereas the default API is based on SageAttention2 now.
 
 ### LLama
-The tuning and inference usage is similar to Cogvideo.
+The tuning and inference usage is similar to CogVideoX.
 
 
 
