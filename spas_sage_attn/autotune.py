@@ -6,6 +6,7 @@ from tqdm import tqdm
 import numpy as np
 from spas_sage_attn.utils import precision_metric
 from spas_sage_attn import spas_sage_attn_meansim_cuda, spas_sage2_attn_meansim_cuda
+import warnings
 
 def extract_sparse_attention_state_dict(model, verbose=False):
     saved_state_dict = {}
@@ -112,7 +113,13 @@ class SparseAttentionMeansim(nn.Module):
         self.hyperparams_cache = {}
 
     def kernel_selection(self):
-        return spas_sage2_attn_meansim_cuda
+        sm = torch.cuda.get_device_capability()
+        sm = 10*sm[0] + sm[1]
+        if sm >= 89:
+            return spas_sage2_attn_meansim_cuda
+        else:
+            warnings.warn(f'{sm=}, do not support sageattn2, using sageattn1 kernel')
+            return spas_sage_attn_meansim_cuda
 
     @torch.no_grad()
     def tune_pvthreshd(self, qi, ki, vi, mask=None, is_causal=False, smooth_k=True, simthreshd1=None, cdfthreshd=None):
