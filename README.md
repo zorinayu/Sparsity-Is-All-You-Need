@@ -5,9 +5,13 @@ This repository provides the official implementation of SpargeAttn.
 Paper: https://arxiv.org/abs/2502.18137  
 Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen
 
+<p align="center">
 <img src="./assets/speed_comparison.png" width="85%" alt="speed comparison.">
+</p>
 
+<p align="center">
 <img src="./assets/overview.png" width="93%" alt="overview.">
+</p>
 
 ## Installation
 ### Base environment
