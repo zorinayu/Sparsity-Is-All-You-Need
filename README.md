@@ -57,10 +57,12 @@ We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow run
 The tuning and inference usage is similar to CogVideoX.
 
 ### Supported models
+Here’s a list of the model modifications we’ve implemented so far. Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
 | model name | example script | tuned ckpt |
 | ---- | ---- | ---- |
-| CogVideoX | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt ｜
-| Flux  | evaluate/flux_example.py  | TBD ｜
+| CogVideoX | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt 
+| Flux  | evaluate/flux_example.py  | TBD 
+
 
 
 ## Performance
