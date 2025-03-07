@@ -56,6 +56,11 @@ We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow run
 ### LLama
 The tuning and inference usage is similar to CogVideoX.
 
+### Supported models
+| model name | example script | tuned ckpt |
+| ---- | ---- | ---- |
+| CogVideoX | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt ｜
+| Flux  | evaluate/flux_example.py  | TBD ｜
 
 
 ## Performance
