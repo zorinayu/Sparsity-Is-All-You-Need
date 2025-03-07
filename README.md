@@ -5,9 +5,13 @@ This repository provides the official implementation of SpargeAttn.
 Paper: https://arxiv.org/abs/2502.18137  
 Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen
 
-<!-- <img src="./assets/overview.png" width="95%" alt="overview."> -->
+<p align="center">
+<img src="./assets/speed_comparison.png" width="85%" alt="speed comparison.">
+</p>
 
-<img src="./assets/speed_comparison.png" width="90%" alt="speed comparison.">
+<p align="center">
+<img src="./assets/overview.png" width="93%" alt="overview.">
+</p>
 
 ## Installation
 ### Base environment
@@ -47,7 +51,7 @@ python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evalu
 ```
 
 > **Note:**
-We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow you to run the inference script directly. However, for better performance in both speed and quality, we recommend re-tuning because the provided hyper-parameters are tuned with SpargeAttn based on SageAttention, whereas the default API is based on SageAttention2 now.
+We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow running the inference script directly. However, for better performance in both speed and quality, we recommend re-tuning because the provided hyper-parameters are tuned with SpargeAttn based on SageAttention, whereas the default API is based on SageAttention2 now.
 
 ### LLama
 The tuning and inference usage is similar to CogVideoX.
@@ -56,17 +60,28 @@ The tuning and inference usage is similar to CogVideoX.
 
 ## Performance
 ![Local Image](./assets/exp_table.png)
-> **Note:** All experiments in this paper used SpargeAttn based on SageAttention. An updated implementation based on SageAttention2, is available now. It further offers a 30% speedup.
+> **Note:** All experiments in the above Table and our paper used SpargeAttn based on SageAttention. An updated implementation based on SageAttention2, is available now. **It further offers a 30% speedup.**
+<br>
 
-<!-- <img src="./assets/more_mochi_example.png" width="60%" alt="End-to-end video generation on Mochi.">  
 
-*End-to-end video generation on Mochi.*
 
-<img src="./assets/niah128k.png" width="60%" alt="End-to-end performance of NIAH.">
+<table>
+  <tr>
+    <td align="center">
+      <img src="./assets/more_mochi_example.png" width="55%" alt="End-to-end video generation on Mochi.">
+      <br>
+      The quality of video generation on Mochi.
+    </td>
+    <td align="center">
+      <img src="./assets/niah128k.png" width="100%" alt="End-to-end performance of NIAH.">
+      <br>
+      End-to-end performance of NIAH.
+    </td>
+  </tr>
+</table>
 
-*End-to-end performance of NIAH.*
 
-<img src="./assets/visible_image.png" width="80%" alt="image generation."> -->
+<!-- <img src="./assets/visible_image.png" width="80%" alt="image generation."> -->
 
 
 
