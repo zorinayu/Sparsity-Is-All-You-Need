@@ -1,9 +1,23 @@
 # Sparge Attention
 This repository provides the official implementation of SpargeAttn.
 
-**SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference**  
-Paper: https://arxiv.org/abs/2502.18137  
-Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen
+<div align="center"> 
+<h2>SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference </h2>
+<a href="https://huggingface.co/papers/2502.18137"><img src="https://img.shields.io/static/v1?label=Daily papers&message=HuggingFace&color=yellow"></a>
+<a href='https://arxiv.org/abs/2502.18137'><img src='https://img.shields.io/badge/arXiv-2502.15894-b31b1b.svg'></a> &nbsp;
+</div>
+
+<div align="center">
+    <a href="https://jt-zhang.github.io/" target="_blank">Jintao Zhang</a><sup></sup> | 
+    <a href="https://xiang-cd.github.io/cv" target="_blank">Chendong Xiang</a><sup></sup> | 
+    <a href="" target="_blank">Haofeng Huang</a><sup></sup> | 
+    <a href="" target="_blank">Haocheng Xi</a><sup></sup>|
+    <a href="" target="_blank">Jia Wei</a><sup></sup> | 
+    <a href="https://ml.cs.tsinghua.edu.cn/~jun/index.shtml" target="_blank">Jun Zhu</a><sup></sup> |
+    <a href="https://ml.cs.tsinghua.edu.cn/~jianfei" target="_blank">Jianfei Chen</a><sup></sup>
+</div>
+
+<!-- Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen -->
 
 <p align="center">
 <img src="./assets/speed_comparison.png" width="85%" alt="speed comparison.">
@@ -66,7 +80,7 @@ The tuning and inference usage is similar to CogVideoX.
 Here’s a list of the model modifications we’ve implemented so far. Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
 | model name | example script | tuned ckpt |
 | ---- | ---- | ---- |
-| CogVideoX | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt 
+| CogVideoX-2b | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt 
 | Flux  | evaluate/flux_example.py  | TBD 
 
 
