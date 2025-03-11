@@ -15,6 +15,7 @@ prompt_path = "evaluate/datasets/video/prompts.txt"
 def parse_args():
     parser = argparse.ArgumentParser(description="Flux Evaluation")
     parser.add_argument("--tune", action="store_true", help="tuning hyperpamameters")
+    parser.add_argument('--parallel_tune', action='store_true', help='enable prallel tuning')
     parser.add_argument('--compile', action='store_true', help='Compile the model')
     parser.add_argument(
         "--use_spas_sage_attn", action="store_true", help="Use Sage Attention"
@@ -48,7 +49,9 @@ if __name__ == "__main__":
 
     with open(prompt_path, "r", encoding="utf-8") as file:
         prompts = file.readlines()
-
+    
+    if args.parallel_tune:
+        os.environ['PARALLEL_TUNE'] = '1'
     if args.tune == True:
         os.environ["TUNE_MODE"] = "1"  # enable tune mode
 

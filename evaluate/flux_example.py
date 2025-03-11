@@ -17,6 +17,7 @@ def parse_args():
 
     parser.add_argument("--use_spas_sage_attn", action="store_true", help="Use Sage Attention")
     parser.add_argument("--tune", action="store_true", help="tuning hyperpamameters")
+    parser.add_argument('--parallel_tune', action='store_true', help='enable prallel tuning')
     parser.add_argument("--verbose", action="store_true", help="Verbose")
     parser.add_argument(
         "--out_path",
@@ -44,6 +45,8 @@ if __name__ == "__main__":
         prompts = file.readlines()
 
     model_id = "black-forest-labs/FLUX.1-dev"
+    if args.parallel_tune:
+        os.environ['PARALLEL_TUNE'] = '1'
     if args.tune == True:
         os.environ["TUNE_MODE"] = "1"  # enable tune mode
 

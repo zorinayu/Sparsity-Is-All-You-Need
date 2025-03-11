@@ -54,7 +54,9 @@ def partition_points_into_line(points, block_size, min_dim1=-1, max_dim1=1):
         blocks[key].append(point)
     return blocks
 
-
+# 
+from tools.gpu_process import GPUProcessPoolExecutor
+executor = GPUProcessPoolExecutor()
 
 class SparseAttentionMeansim(nn.Module):
     def __init__(self, sim_rule="l1", l1=0.07, pv_l1=0.08, cos_sim=0.98, rmse=0.07, rearrange_kwargs={}, tune_pv=True):
@@ -189,6 +191,9 @@ class SparseAttentionMeansim(nn.Module):
 
     @torch.no_grad()
     def autotune(self, qi, ki, vi, head_idx, mask=None, is_causal=False, smooth_k=True):
+        qi = qi.to(torch.cuda.current_device())
+        ki = ki.to(torch.cuda.current_device())
+        vi = vi.to(torch.cuda.current_device())
         all_hyperparams = []
         granularity = 16
         for simthreshd1 in range(int(-1 * granularity), int(1 * granularity)):
@@ -239,10 +244,20 @@ class SparseAttentionMeansim(nn.Module):
         final_cdfthreshd = np.max([x['cdfthreshd'] for x in final_group]).item()
         final_pvthreshd = np.max([x['pvthreshd'] for x in final_group]).item()
         mean_sparsity = np.mean([x['sparsity'] for x in final_group]).item()
-        self.simthreshd1[head_idx] = final_simthreshd1
-        self.cdfthreshd[head_idx] = final_cdfthreshd
-        self.pvthreshd[head_idx] = final_pvthreshd
-        self.is_sparse[head_idx] = mean_sparsity > 0.1 and self.is_sparse[head_idx]
+        return {
+            'final_simthreshd1': final_simthreshd1,
+            'final_cdfthreshd': final_cdfthreshd,
+            'final_pvthreshd': final_pvthreshd,
+            'mean_sparsity': mean_sparsity,
+            'head_idx': head_idx
+        }
+        
+    def fill_results(self, rtdict):
+        head_idx = rtdict['head_idx']
+        self.simthreshd1[head_idx] = rtdict['final_simthreshd1']
+        self.cdfthreshd[head_idx] = rtdict['final_cdfthreshd']
+        self.pvthreshd[head_idx] = rtdict['final_pvthreshd']
+        self.is_sparse[head_idx] = rtdict['mean_sparsity'] > 0.1 and self.is_sparse[head_idx]
         if not self.is_sparse[head_idx]:
             self.cdfthreshd[head_idx] = 1
             self.simthreshd1[head_idx] = 1
@@ -264,11 +279,26 @@ class SparseAttentionMeansim(nn.Module):
         if os.environ.get("TUNE_MODE", "") != "" or tune_mode:
             if self.is_sparse is None:  # init per head hyper parameters
                 self.init_hyperparams(q.shape[1], q.device)
-            for i in tqdm(range(self.head_num)):
-                if not self.is_sparse[i].item():
-                    continue
-                qi, ki, vi = q[:, i : i + 1], k[:, i : i + 1], v[:, i : i + 1]
-                self.autotune(qi, ki, vi, head_idx=i, mask=mask, is_causal=is_causal, smooth_k=smooth_k)
+            if os.environ.get('PARALLEL_TUNE', '') == '':
+                for i in tqdm(range(self.head_num)):
+                    if not self.is_sparse[i].item():
+                        continue
+                    qi, ki, vi = q[:, i : i + 1], k[:, i : i + 1], v[:, i : i + 1]
+                    rtdict = self.autotune(qi, ki, vi, head_idx=i, mask=mask, is_causal=is_causal, smooth_k=smooth_k)
+                    self.fill_results(rtdict)
+            else:
+                futures = []
+                for i in range(self.head_num):
+                    if not self.is_sparse[i].item():
+                        continue
+                    qi, ki, vi = q[:, i : i + 1], k[:, i : i + 1], v[:, i : i + 1]
+                    future = executor.submit(self.autotune, qi, ki, vi, head_idx=i, mask=mask, is_causal=is_causal, smooth_k=smooth_k)
+                    futures.append(future)
+                for future in tqdm(futures):
+                    rtdict = future.result()
+                    self.fill_results(rtdict)
+                    
+                
             self.num_data_passed += 1
             print(f'{self.cdfthreshd=}')
             print(f'{self.simthreshd1=}')

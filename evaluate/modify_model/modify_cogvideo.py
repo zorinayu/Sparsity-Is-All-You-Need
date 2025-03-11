@@ -84,10 +84,12 @@ class SageAttnCogVideoXAttnProcessor:
 def set_spas_sage_attn_cogvideox(
     model: CogVideoXTransformer3DModel,
     verbose=False,
+    l1=0.06,
+    pv_l1=0.065
 ):
     for idx, block in enumerate(model.transformer_blocks):
         block.attn1.verbose = verbose
-        block.attn1.inner_attention = SparseAttentionMeansim(l1=0.06, pv_l1=0.065)  # SparseAttention() # only register to model could be saved by ckpt
+        block.attn1.inner_attention = SparseAttentionMeansim(l1=l1, pv_l1=pv_l1)  # SparseAttention() # only register to model could be saved by ckpt
         origin_processor = block.attn1.get_processor()
         processor = SageAttnCogVideoXAttnProcessor(idx, )
         block.attn1.set_processor(processor)

@@ -42,7 +42,13 @@ python setup.py install   # or pip install -e .
 
 Tuning:  
 ```bash
+# sequential tuning
 python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --tune
+
+# parallel tuning, this will use all gpu available on the machine 
+# do hyperparameter tuning with head level parallel
+# NOTE: this will use more GPU vram in the main process
+python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --tune --parallel_tune
 ```
 
 Inference:  
