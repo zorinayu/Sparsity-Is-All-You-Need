@@ -18,6 +18,8 @@ def parse_args():
     parser.add_argument("--use_spas_sage_attn", action="store_true", help="Use Sage Attention")
     parser.add_argument("--tune", action="store_true", help="tuning hyperpamameters")
     parser.add_argument('--parallel_tune', action='store_true', help='enable prallel tuning')
+    parser.add_argument('--l1', type=float, default=0.06, help='l1 bound for qk sparse')
+    parser.add_argument('--pv_l1', type=float, default=0.065, help='l1 bound for pv sparse')
     parser.add_argument("--verbose", action="store_true", help="Verbose")
     parser.add_argument(
         "--out_path",
@@ -37,8 +39,7 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    if not os.path.exists(args.out_path):
-        os.makedirs(args.out_path)
+    os.makedirs(args.out_path, exist_ok=True)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     with open(file_path, "r", encoding="utf-8") as file:
@@ -56,7 +57,7 @@ if __name__ == "__main__":
             torch_dtype=torch.float16,
         )
         if args.use_spas_sage_attn:
-            set_spas_sage_attn_flux(transformer, verbose=args.verbose)
+            set_spas_sage_attn_flux(transformer, verbose=args.verbose, l1=args.l1, pv_l1=args.pv_l1)
 
         pipe = FluxPipeline.from_pretrained(
             model_id,
@@ -75,6 +76,7 @@ if __name__ == "__main__":
                 guidance_scale=3.5,
                 num_inference_steps=50,
                 max_sequence_length=512,
+                generator=torch.Generator(device="cuda").manual_seed(42)
             ).images[0]
 
             del image
@@ -94,7 +96,7 @@ if __name__ == "__main__":
             torch_dtype=torch.float16,
         )
         if args.use_spas_sage_attn:
-            set_spas_sage_attn_flux(transformer, verbose=args.verbose)
+            set_spas_sage_attn_flux(transformer, verbose=args.verbose, l1=args.l1, pv_l1=args.pv_l1)
             saved_state_dict = torch.load(args.model_out_path)
             load_sparse_attention_state_dict(transformer, saved_state_dict)
 
@@ -115,6 +117,7 @@ if __name__ == "__main__":
                 guidance_scale=3.5,
                 num_inference_steps=50,
                 max_sequence_length=512,
+                generator=torch.Generator(device="cuda").manual_seed(42)
             ).images[0]
 
             image.save(f"{args.out_path}/{i}.jpg")

@@ -16,6 +16,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Flux Evaluation")
     parser.add_argument("--tune", action="store_true", help="tuning hyperpamameters")
     parser.add_argument('--parallel_tune', action='store_true', help='enable prallel tuning')
+    parser.add_argument('--l1', type=float, default=0.06, help='l1 bound for qk sparse')
+    parser.add_argument('--pv_l1', type=float, default=0.065, help='l1 bound for pv sparse')
     parser.add_argument('--compile', action='store_true', help='Compile the model')
     parser.add_argument(
         "--use_spas_sage_attn", action="store_true", help="Use Sage Attention"
@@ -39,8 +41,7 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    if not os.path.exists(args.out_path):
-        os.makedirs(args.out_path)
+    os.makedirs(args.out_path, exist_ok=True)
 
     dtype_ = torch.bfloat16
     num_frames_ = 49
@@ -62,7 +63,7 @@ if __name__ == "__main__":
         )
 
         if args.use_spas_sage_attn:
-            set_spas_sage_attn_cogvideox(transformer, verbose=args.verbose)
+            set_spas_sage_attn_cogvideox(transformer, verbose=args.verbose, l1=args.l1, pv_l1=args.pv_l1)
 
         pipe = CogVideoXPipeline.from_pretrained(
             "THUDM/CogVideoX-2b",
@@ -99,7 +100,7 @@ if __name__ == "__main__":
         )
 
         if args.use_spas_sage_attn:
-            set_spas_sage_attn_cogvideox(transformer, verbose=args.verbose)
+            set_spas_sage_attn_cogvideox(transformer, verbose=args.verbose, l1=args.l1, pv_l1=args.pv_l1)
             # load saved state_dict
             saved_state_dict = torch.load(args.model_out_path)  
             load_sparse_attention_state_dict(transformer, saved_state_dict)
