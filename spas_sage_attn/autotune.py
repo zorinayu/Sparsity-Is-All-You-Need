@@ -319,7 +319,7 @@ class SparseAttentionMeansim(nn.Module):
                 cdfthreshd=self.cdfthreshd,
                 simthreshd1=self.simthreshd1,
                 pvthreshd=self.pvthreshd.float(),
-                return_sparsity=True,
+                return_sparsity=return_sparsity,
                 attention_sink= True,  # Only keep True when inference !!!!
             )
         
