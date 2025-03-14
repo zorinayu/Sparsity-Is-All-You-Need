@@ -67,11 +67,14 @@ python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evalu
 
 Inference:  
 ```bash
-python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt
+python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --compile
 ```
 
 > **Note:**
 We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow running the inference script directly. However, for better performance in both speed and quality, we recommend re-tuning because the provided hyper-parameters are tuned with SpargeAttn based on SageAttention, whereas the default API is based on SageAttention2 now.
+
+> **Note:**
+`--compile` is optional and will further accelerate video generation but bring an overhead for the first video generation.
 
 ### LLama
 The tuning and inference usage is similar to CogVideoX.
