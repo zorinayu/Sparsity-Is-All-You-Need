@@ -309,7 +309,7 @@ class SparseAttentionMeansim(nn.Module):
         else:
             assert self.cdfthreshd is not None, "attention hyperparameters should be tuned first"
             kernel = self.kernel_selection()
-            o, total_sparsity = kernel(
+            o = kernel(
                 q,
                 k,
                 v,
@@ -324,6 +324,7 @@ class SparseAttentionMeansim(nn.Module):
             )
         
         if return_sparsity:
+            o, total_sparsity = o
             return o, total_sparsity
         else:
             return o
