@@ -74,6 +74,7 @@ class SparseAttentionMeansim(nn.Module):
         self.simthreshd1 = None
         self.simthreshd2 = None
         self.pvthreshd = None
+        self.tuning_sparsity = None
         self.num_data_passed = 0
         self.hyperparams_cache = {}
         self.sim_rule = sim_rule
@@ -112,6 +113,7 @@ class SparseAttentionMeansim(nn.Module):
             torch.ones(self.head_num, device=device) * 20,
             requires_grad=False,
         )
+        self.tuning_sparsity = torch.zeros(self.head_num, device=device)
         self.num_data_passed = 0
         self.hyperparams_cache = {}
 
@@ -259,6 +261,7 @@ class SparseAttentionMeansim(nn.Module):
         self.cdfthreshd[head_idx] = rtdict['final_cdfthreshd']
         self.pvthreshd[head_idx] = rtdict['final_pvthreshd']
         self.is_sparse[head_idx] = rtdict['mean_sparsity'] > 0.1 and self.is_sparse[head_idx]
+        self.tuning_sparsity[head_idx] = rtdict['mean_sparsity']
         if not self.is_sparse[head_idx]:
             self.cdfthreshd[head_idx] = 1
             self.simthreshd1[head_idx] = 1
@@ -311,6 +314,8 @@ class SparseAttentionMeansim(nn.Module):
             print(f'{self.simthreshd1=}')
             print(f'{self.is_sparse=}')
             print(f'{self.pvthreshd=}')
+            print(f'{self.tuning_sparsity=}')
+            print(f'mean sparsity:{self.tuning_sparsity.mean().item()}')
             o = F.scaled_dot_product_attention(q, k, v, mask, is_causal=is_causal)
             if tensor_layout == 'NHD':
                 o = rearrange(o, '... H L D -> ... L H D')
