@@ -312,6 +312,8 @@ class SparseAttentionMeansim(nn.Module):
             print(f'{self.is_sparse=}')
             print(f'{self.pvthreshd=}')
             o = F.scaled_dot_product_attention(q, k, v, mask, is_causal=is_causal)
+            if tensor_layout == 'NHD':
+                o = rearrange(o, '... H L D -> ... L H D')
             torch.cuda.empty_cache()
         else:
             assert self.cdfthreshd is not None, "attention hyperparameters should be tuned first"
