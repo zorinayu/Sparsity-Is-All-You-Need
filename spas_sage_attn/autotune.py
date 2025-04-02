@@ -7,6 +7,7 @@ import numpy as np
 from spas_sage_attn.utils import precision_metric
 from spas_sage_attn import spas_sage_attn_meansim_cuda, spas_sage2_attn_meansim_cuda
 import warnings
+from einops import rearrange
 
 def extract_sparse_attention_state_dict(model, verbose=False):
     saved_state_dict = {}
@@ -270,6 +271,8 @@ class SparseAttentionMeansim(nn.Module):
         v,
         mask=None,
         is_causal=False,
+        scale=None,
+        tensor_layout="HND",
         tune_mode=False,
         smooth_k=True,
         return_sparsity=False,
@@ -277,6 +280,10 @@ class SparseAttentionMeansim(nn.Module):
         assert len(q.shape) == 4, "q should be 4-d tensor with B, H, L, D"
             
         if os.environ.get("TUNE_MODE", "") != "" or tune_mode:
+            if tensor_layout == 'NHD':
+                q = rearrange(q, '... L H D -> ... H L D')
+                k = rearrange(k, '... L H D -> ... H L D')
+                v = rearrange(v, '... L H D -> ... H L D')
             if self.is_sparse is None:  # init per head hyper parameters
                 self.init_hyperparams(q.shape[1], q.device)
             if os.environ.get('PARALLEL_TUNE', '') == '':
@@ -316,6 +323,8 @@ class SparseAttentionMeansim(nn.Module):
                 mask,
                 is_causal=is_causal,
                 smooth_k=smooth_k,
+                scale=scale,
+                tensor_layout=tensor_layout,
                 cdfthreshd=self.cdfthreshd,
                 simthreshd1=self.simthreshd1,
                 pvthreshd=self.pvthreshd.float(),
