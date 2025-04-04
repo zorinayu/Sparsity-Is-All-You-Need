@@ -40,7 +40,10 @@ This repository provides the official implementation of SpargeAttn.
 ### Install Package
 
 ```bash
+# only install sparge attention
 python setup.py install   # or pip install -e .
+# if want to try examples, install other packages
+pip install -r requirements.txt 
 ```
 
 

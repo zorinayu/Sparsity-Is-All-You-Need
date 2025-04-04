@@ -1,0 +1,5 @@
+transformers
+diffusers
+einops
+protobuf
+sentencepiece
