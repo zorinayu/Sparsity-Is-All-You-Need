@@ -332,11 +332,12 @@ def generate(args):
                 offload_model=args.offload_model
             )
             if rank == 0:
-                if args.save_file is None:
-                    formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    formatted_prompt = prompt.replace(" ", "_").replace("/", "_")[:50]
-                    suffix = '.png' if "t2i" in args.task else '.mp4'
-                    args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
+                os.makedirs(args.out_path, exist_ok=True)
+                formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+                formatted_prompt = prompt.replace(" ", "_").replace("/", "_")[:50]
+                suffix = '.png' if "t2i" in args.task else '.mp4'
+                args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
+                args.save_file = os.path.join(args.out_path, args.save_file)
 
                 if "t2i" in args.task:
                     logging.info(f"Saving generated image to {args.save_file}")
@@ -406,11 +407,12 @@ def generate(args):
                 offload_model=args.offload_model)
 
             if rank == 0:
-                if args.save_file is None:
-                    formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    formatted_prompt = prompt.replace(" ", "_").replace("/", "_")[:50]
-                    suffix = '.png' if "t2i" in args.task else '.mp4'
-                    args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
+                os.makedirs(args.out_path, exist_ok=True)
+                formatted_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+                formatted_prompt = prompt.replace(" ", "_").replace("/", "_")[:50]
+                suffix = '.png' if "t2i" in args.task else '.mp4'
+                args.save_file = f"{args.task}_{args.size.replace('*','x') if sys.platform=='win32' else args.size}_{args.ulysses_size}_{args.ring_size}_{formatted_prompt}_{formatted_time}" + suffix
+                args.save_file = os.path.join(args.out_path, args.save_file)
 
                 if "t2i" in args.task:
                     logging.info(f"Saving generated image to {args.save_file}")
