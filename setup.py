@@ -152,6 +152,7 @@ for capability in compute_capabilities:
 
 ext_modules = []
 
+run_instantiations("csrc/qattn/instantiations_sm80")
 run_instantiations("csrc/qattn/instantiations_sm89")
 
 # Attention kernels.
