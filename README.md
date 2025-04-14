@@ -41,6 +41,7 @@ This repository provides the official implementation of SpargeAttn.
 
 ```bash
 # only install sparge attention
+pip install ninja   # for parallel compilation
 python setup.py install   # or pip install -e .
 # if want to try examples, install other packages
 pip install -r requirements.txt 
