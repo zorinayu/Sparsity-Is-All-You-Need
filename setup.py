@@ -186,7 +186,7 @@ setup(
     author_email='jt-zhang6@gmail.com', 
     packages=find_packages(),  
     description='Accurate and efficient Sparse SageAttention.',  
-    long_description=open('README.md').read(),  
+    long_description=open('README.md', encoding='utf-8').read(),  
     long_description_content_type='text/markdown', 
     url='https://github.com/thu-ml/SpargeAttn', 
     license='BSD 3-Clause License', 
