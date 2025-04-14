@@ -10,7 +10,7 @@ This repository provides the official implementation of SpargeAttn.
 <div align="center">
     <a href="https://jt-zhang.github.io/" target="_blank">Jintao Zhang</a><sup></sup> | 
     <a href="https://xiang-cd.github.io/cv" target="_blank">Chendong Xiang</a><sup></sup> | 
-    <a href="" target="_blank">Haofeng Huang</a><sup></sup> | 
+    <a href="https://github.com/jason-huang03" target="_blank">Haofeng Huang</a><sup></sup> | 
     <a href="" target="_blank">Haocheng Xi</a><sup></sup>|
     <a href="" target="_blank">Jia Wei</a><sup></sup> | 
     <a href="https://ml.cs.tsinghua.edu.cn/~jun/index.shtml" target="_blank">Jun Zhu</a><sup></sup> |
