@@ -1,5 +1,5 @@
 # Sparge Attention
-This repository provides the official implementation of SpargeAttn.
+The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a universal sparse attention accelerating language, image, and video models.
 
 <div align="center"> 
 <h2>SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference </h2>
@@ -19,12 +19,14 @@ This repository provides the official implementation of SpargeAttn.
 
 <!-- Jintao Zhang, Chendong Xiang, Haofeng Huang, Haocheng Xi, Jia Wei, Jun Zhu, Jianfei Chen -->
 
+<br>
+
 <p align="center">
-<img src="./assets/speed_comparison.png" width="85%" alt="speed comparison.">
+<img src="./assets/speed_comparison.png" width="81%" alt="speed comparison.">
 </p>
 
 <p align="center">
-<img src="./assets/overview.png" width="93%" alt="overview.">
+<img src="./assets/overview.png" width="90%" alt="overview.">
 </p>
 
 ## Installation
@@ -40,11 +42,8 @@ This repository provides the official implementation of SpargeAttn.
 ### Install Package
 
 ```bash
-# only install sparge attention
 pip install ninja   # for parallel compilation
 python setup.py install   # or pip install -e .
-# if want to try examples, install other packages
-pip install -r requirements.txt 
 ```
 
 
@@ -64,13 +63,12 @@ Tuning:
 python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --tune
 
 # parallel tuning, this will use all gpu available on the machine 
-# do hyperparameter tuning with head level parallel
-# NOTE: this will use more GPU vram in the main process
 python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --tune --parallel_tune
 ```
 
 Inference:  
 ```bash
+# `--compile` is optional and will slow the first time inference.
 python evaluate/cogvideo_example.py  --use_spas_sage_attn --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt --compile
 ```
 
@@ -84,7 +82,7 @@ We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow run
 The tuning and inference usage is similar to CogVideoX.
 
 ### Supported models
-Here’s a list of the model modifications we’ve implemented so far. Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
+Here’s a list of the tuned models so far. Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
 | model name | example script | tuned ckpt |
 | ---- | ---- | ---- |
 | CogVideoX-2b | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt 
