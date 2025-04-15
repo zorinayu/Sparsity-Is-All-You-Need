@@ -25,6 +25,8 @@ from setuptools import setup, find_packages
 import torch
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension, CUDA_HOME
 
+HAS_SM90 = False
+
 def run_instantiations(src_dir: str):
     base_path = Path(src_dir)
     py_files = [
@@ -146,6 +148,10 @@ if nvcc_cuda_version < Version("12.4"):
 # Add target compute capabilities to NVCC flags.
 for capability in compute_capabilities:
     num = capability[0] + capability[2]
+    if num == '90':
+        num = '90a'
+        HAS_SM90 = True
+        CXX_FLAGS += ["-DHAS_SM90"]
     NVCC_FLAGS += ["-gencode", f"arch=compute_{num},code=sm_{num}"]
     if capability.endswith("+PTX"):
         NVCC_FLAGS += ["-gencode", f"arch=compute_{num},code=compute_{num}"]
@@ -154,19 +160,26 @@ ext_modules = []
 
 run_instantiations("csrc/qattn/instantiations_sm80")
 run_instantiations("csrc/qattn/instantiations_sm89")
+run_instantiations("csrc/qattn/instantiations_sm90")
 
-# Attention kernels.
+sources = [
+    "csrc/qattn/pybind.cpp",
+    "csrc/qattn/qk_int_sv_f16_cuda_sm80.cu",
+    "csrc/qattn/qk_int_sv_f8_cuda_sm89.cu",
+] + get_instantiations("csrc/qattn/instantiations_sm80") + get_instantiations("csrc/qattn/instantiations_sm89")
+
+if HAS_SM90:
+    sources += ["csrc/qattn/qk_int_sv_f8_cuda_sm90.cu", ]
+    sources += get_instantiations("csrc/qattn/instantiations_sm90")
+
 qattn_extension = CUDAExtension(
     name="spas_sage_attn._qattn",
-    sources=[
-        "csrc/qattn/pybind.cpp",
-        "csrc/qattn/qk_int_sv_f16_cuda_sm80.cu",
-        "csrc/qattn/qk_int_sv_f8_cuda_sm89.cu",
-    ] + get_instantiations("csrc/qattn/instantiations_sm89") + get_instantiations("csrc/qattn/instantiations_sm80"),
+    sources=sources,
     extra_compile_args={
         "cxx": CXX_FLAGS,
         "nvcc": NVCC_FLAGS,
     },
+    extra_link_args=['-lcuda'],
 )
 ext_modules.append(qattn_extension)
 
