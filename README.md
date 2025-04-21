@@ -1,11 +1,7 @@
 # Sparge Attention
 The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a universal sparse attention accelerating language, image, and video models.
 
-<div align="center"> 
-<h2>SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference </h2>
-<a href="https://huggingface.co/papers/2502.18137"><img src="https://img.shields.io/static/v1?label=Daily papers&message=HuggingFace&color=yellow"></a>
-<a href='https://arxiv.org/abs/2502.18137'><img src='https://img.shields.io/badge/arXiv-2502.15894-b31b1b.svg'></a> &nbsp;
-</div>
+<div align="center"> <h2>SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference</h2> <a href="https://huggingface.co/papers/2502.18137"> <img src="https://img.shields.io/static/v1?label=Daily%20papers&message=HuggingFace&color=yellow" alt="Daily papers: HuggingFace"> </a> <a href="https://arxiv.org/abs/2502.18137"> <img src="https://img.shields.io/badge/arXiv-2502.18137-b31b1b.svg" alt="arXiv:2502.18137"> </a> </div> 
 
 <div align="center">
     <a href="https://jt-zhang.github.io/" target="_blank">Jintao Zhang</a><sup></sup> | 
