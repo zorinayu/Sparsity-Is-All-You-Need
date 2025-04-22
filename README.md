@@ -78,10 +78,13 @@ We provide pre-tuned hyper-parameters `CogVideoX-2b_0.06_0.07.pt` that allow run
 The tuning and inference usage is similar to CogVideoX.
 
 ### Supported models
-Here’s a list of the tuned models so far. Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
+Here’s a list of the tuned models so far, go to [hugginface](https://huggingface.co/Xiang-cd/sparge-attention-model-zoo) to see all tuned ckpt. 
+Our approach is universal, and we warmly welcome contributions! Feel free to submit a pull request to support more models. 🚀
+
 | model name | example script | tuned ckpt |
 | ---- | ---- | ---- |
-| CogVideoX-2b | evaluate/cogvideo_example.py | evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt 
+| CogVideoX-2b | evaluate/cogvideo_example.py | [link](https://huggingface.co/Xiang-cd/sparge-attention-model-zoo/blob/main/cogvideox-2b/CogVideoX-2b_0.06_0.07.pt)
+| want2v-1.3B  | evaluate/wan_example.py | [link](https://huggingface.co/Xiang-cd/sparge-attention-model-zoo/tree/main/want2v-1.3B)
 | Flux  | evaluate/flux_example.py  | TBD 
 
 
