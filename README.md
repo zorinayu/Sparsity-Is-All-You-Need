@@ -119,14 +119,11 @@ Our approach is universal, and we warmly welcome contributions! Feel free to sub
 ## Citation
 **If you use this code or find our work valuable, please cite:**
 ```
-@misc{zhang2025spargeattn,
-      title={SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference}, 
-      author={Jintao Zhang and Chendong Xiang and Haofeng Huang and Jia Wei and Haocheng Xi and Jun Zhu and Jianfei Chen},
-      year={2025},
-      eprint={2502.18137},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2502.18137}, 
+@article{zhang2025spargeattn,
+  title={Spargeattn: Accurate sparse attention accelerating any model inference},
+  author={Zhang, Jintao and Xiang, Chendong and Huang, Haofeng and Wei, Jia and Xi, Haocheng and Zhu, Jun and Chen, Jianfei},
+  journal={arXiv preprint arXiv:2502.18137},
+  year={2025}
 }
 
 @inproceedings{zhang2025sageattention,
@@ -136,13 +133,10 @@ Our approach is universal, and we warmly welcome contributions! Feel free to sub
       year={2025}
 }
 
-@misc{zhang2024sageattention2,
-      title={SageAttention2: Efficient Attention with Thorough Outlier Smoothing and Per-thread INT4 Quantization}, 
-      author={Jintao Zhang and Haofeng Huang and Pengle Zhang and Jia Wei and Jun Zhu and Jianfei Chen},
-      year={2024},
-      eprint={2411.10958},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2411.10958}, 
+@article{zhang2024sageattention2,
+  title={Sageattention2: Efficient attention with thorough outlier smoothing and per-thread int4 quantization},
+  author={Zhang, Jintao and Huang, Haofeng and Zhang, Pengle and Wei, Jia and Zhu, Jun and Chen, Jianfei},
+  journal={arXiv preprint arXiv:2411.10958},
+  year={2024}
 }
 ```
