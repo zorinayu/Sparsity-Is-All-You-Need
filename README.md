@@ -25,6 +25,10 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 <img src="./assets/overview.png" width="90%" alt="overview.">
 </p>
 
+## Project Updates
+- [2025-05-02]: 🎉SpargeAttn and [SageAttention2](https://github.com/thu-ml/SageAttention) are accepted by ICML 2025!
+- [2025-01-24]: 🎉[SageAttention](https://github.com/thu-ml/SageAttention) is accepted by ICLR 2025! 
+
 ## Installation
 ### Base environment
 + `python>=3.9`   , `torch>=2.3.0`
@@ -119,10 +123,10 @@ Our approach is universal, and we warmly welcome contributions! Feel free to sub
 ## Citation
 **If you use this code or find our work valuable, please cite:**
 ```
-@article{zhang2025spargeattn,
+@inproceedings{zhang2025spargeattn,
   title={Spargeattn: Accurate sparse attention accelerating any model inference},
   author={Zhang, Jintao and Xiang, Chendong and Huang, Haofeng and Wei, Jia and Xi, Haocheng and Zhu, Jun and Chen, Jianfei},
-  journal={arXiv preprint arXiv:2502.18137},
+  booktitle={International Conference on Machine Learning (ICML)},
   year={2025}
 }
 
@@ -133,10 +137,10 @@ Our approach is universal, and we warmly welcome contributions! Feel free to sub
       year={2025}
 }
 
-@article{zhang2024sageattention2,
+@inproceedings{zhang2024sageattention2,
   title={Sageattention2: Efficient attention with thorough outlier smoothing and per-thread int4 quantization},
   author={Zhang, Jintao and Huang, Haofeng and Zhang, Pengle and Wei, Jia and Zhu, Jun and Chen, Jianfei},
-  journal={arXiv preprint arXiv:2411.10958},
-  year={2024}
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2025}
 }
 ```
