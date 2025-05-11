@@ -55,6 +55,16 @@ python setup.py install   # or pip install -e .
 
 
 ## Usage Examples
+## A Simple Usage Without Tuning for Any Model
+```python
+from spas_sage_attn import spas_sage2_attn_meansim_cuda
+
+attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.5, cdfthreshd=0.97, is_causal=False)
+```
+
+**You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values).**  
+
+
 ### CogVideoX
 
 Tuning:  
