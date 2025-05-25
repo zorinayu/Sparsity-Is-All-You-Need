@@ -59,7 +59,7 @@ python setup.py install   # or pip install -e .
 ```python
 from spas_sage_attn import spas_sage2_attn_meansim_cuda
 
-attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.5, cdfthreshd=0.97, is_causal=False)
+attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.6, cdfthreshd=0.98, is_causal=False)
 ```
 
 **You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values).**  
