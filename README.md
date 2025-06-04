@@ -26,6 +26,7 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 </p>
 
 ## Project Updates
+- [2025-05-11]: Add a **very simple usage without tuning or calibration**: `o = spas_sage2_attn_meansim_cuda(q, k, v)`.
 - [2025-05-02]: 🎉SpargeAttn and [SageAttention2](https://github.com/thu-ml/SageAttention) are accepted by ICML 2025!
 - [2025-01-24]: 🎉[SageAttention](https://github.com/thu-ml/SageAttention) is accepted by ICLR 2025! 
 
