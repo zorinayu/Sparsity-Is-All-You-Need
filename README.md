@@ -1,7 +1,7 @@
 # SpargeAttention
-The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a universal sparse attention accelerating language, image, and video models.
+The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a universal training-free sparse attention accelerating language, image, and video models.
 
-<div align="center"> <h2>SpargeAttn: Accurate Sparse Attention Accelerating Any Model Inference</h2> <a href="https://huggingface.co/papers/2502.18137"> <img src="https://img.shields.io/static/v1?label=Daily%20papers&message=HuggingFace&color=yellow" alt="Daily papers: HuggingFace"> </a> <a href="https://arxiv.org/abs/2502.18137"> <img src="https://img.shields.io/badge/arXiv-2502.18137-b31b1b.svg" alt="arXiv:2502.18137"> </a> </div> 
+<div align="center"> <h2>SpargeAttn: Training-free and Accurate Sparse Attention Accelerating Any Model Inference</h2> <a href="https://huggingface.co/papers/2502.18137"> <img src="https://img.shields.io/static/v1?label=Daily%20papers&message=HuggingFace&color=yellow" alt="Daily papers: HuggingFace"> </a> <a href="https://arxiv.org/abs/2502.18137"> <img src="https://img.shields.io/badge/arXiv-2502.18137-b31b1b.svg" alt="arXiv:2502.18137"> </a> </div> 
 
 <div align="center">
     <a href="https://jt-zhang.github.io/" target="_blank">Jintao Zhang</a><sup></sup> | 
@@ -26,6 +26,7 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 </p>
 
 ## Project Updates
+- SpargeAttn based on SageAttention2++ will be released around June 25.
 - [2025-05-11]: Add a **very simple usage without tuning or calibration**: `o = spas_sage2_attn_meansim_cuda(q, k, v)`.
 - [2025-05-02]: 🎉SpargeAttn and [SageAttention2](https://github.com/thu-ml/SageAttention) are accepted by ICML 2025!
 - [2025-01-24]: 🎉[SageAttention](https://github.com/thu-ml/SageAttention) is accepted by ICLR 2025! 
@@ -63,7 +64,7 @@ from spas_sage_attn import spas_sage2_attn_meansim_cuda
 attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.6, cdfthreshd=0.98, is_causal=False)
 ```
 
-**You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values). However, for optimal accuracy and sparsity performance, we recommend running a tuning process before inference, as described below.**  
+You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values). **However, for optimal accuracy and sparsity performance, we recommend running a tuning process before inference, as described below.**  
 
 
 ### CogVideoX
