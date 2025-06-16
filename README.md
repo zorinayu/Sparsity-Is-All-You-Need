@@ -1,7 +1,7 @@
 # SpargeAttention
 The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a universal training-free sparse attention accelerating language, image, and video models.
 
-<div align="center"> <h2>SpargeAttn: Training-free and Accurate Sparse Attention Accelerating Any Model Inference</h2> <a href="https://huggingface.co/papers/2502.18137"> <img src="https://img.shields.io/static/v1?label=Daily%20papers&message=HuggingFace&color=yellow" alt="Daily papers: HuggingFace"> </a> <a href="https://arxiv.org/abs/2502.18137"> <img src="https://img.shields.io/badge/arXiv-2502.18137-b31b1b.svg" alt="arXiv:2502.18137"> </a> </div> 
+<div align="center"> <h2>SpargeAttn: Training-free and Accurate Sparse Attention<br>Accelerating Any Model Inference</h2> <a href="https://huggingface.co/papers/2502.18137"> <img src="https://img.shields.io/static/v1?label=Daily%20papers&message=HuggingFace&color=yellow" alt="Daily papers: HuggingFace"> </a> <a href="https://arxiv.org/abs/2502.18137"> <img src="https://img.shields.io/badge/arXiv-2502.18137-b31b1b.svg" alt="arXiv:2502.18137"> </a> </div> 
 
 <div align="center">
     <a href="https://jt-zhang.github.io/" target="_blank">Jintao Zhang</a><sup></sup> | 
@@ -26,7 +26,7 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 </p>
 
 ## Project Updates
-- SpargeAttn based on SageAttention2++ will be released around June 25.
+- SpargeAttn based on [SageAttention2++](https://arxiv.org/abs/2505.21136) will be released around June 25.
 - [2025-05-11]: Add a **very simple usage without tuning or calibration**: `o = spas_sage2_attn_meansim_cuda(q, k, v)`.
 - [2025-05-02]: 🎉SpargeAttn and [SageAttention2](https://github.com/thu-ml/SageAttention) are accepted by ICML 2025!
 - [2025-01-24]: 🎉[SageAttention](https://github.com/thu-ml/SageAttention) is accepted by ICLR 2025! 
@@ -35,10 +35,7 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 ### Base environment
 + `python>=3.9`   , `torch>=2.3.0`
 - `CUDA`:
-  + `>=12.8` for Blackwell
-  + `>=12.4` for fp8 support on Ada
-  + `>=12.3` for fp8 support on Hopper
-  + `>=12.0` for Ampere
+  + `>=12.8` for Blackwell, `>=12.4` for fp8 support on Ada, `>=12.3` for fp8 support on Hopper, `>=12.0` for Ampere
 
 
 ### Install Package
