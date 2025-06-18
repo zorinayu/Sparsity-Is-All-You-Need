@@ -26,7 +26,7 @@ The official implementation of [SpargeAttn](https://arxiv.org/abs/2502.18137), a
 </p>
 
 ## Project Updates
-- [Here](https://github.com/jt-zhang/Sparse_SageAttention_API) provides a Sparse Attention API based on SageAttention V1, which can compute attention with any block sparse pattern very fast.
+- [Here](https://github.com/jt-zhang/Sparse_SageAttention_API) provides a Sparse Attention API based on SageAttention **V1**, which can compute attention with any block sparse pattern very fast.
 - SpargeAttn based on [SageAttention2++](https://arxiv.org/abs/2505.21136) will be released around June 25.
 - [2025-05-11]: Add a **very simple usage without tuning or calibration**: `o = spas_sage2_attn_meansim_cuda(q, k, v)`.
 - [2025-05-02]: 🎉SpargeAttn and [SageAttention2](https://github.com/thu-ml/SageAttention) are accepted by ICML 2025!
