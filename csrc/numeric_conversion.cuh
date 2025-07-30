@@ -22,6 +22,7 @@
 #include <cuda_fp8.h>
 #include <cuda_runtime.h>
 #include <cuda/pipeline>
+#include <assert.h>
 
 #if (__CUDACC_VER_MAJOR__ * 10000 + __CUDACC_VER_MINOR__ * 100 >= 120400)
 #if (!defined(__CUDA_ARCH__) || (__CUDA_ARCH__ >= 890))
@@ -33,8 +34,8 @@
 #define RUNTIME_ASSERT(x) __brkpt()
 #else
 //#include <assert.h>
-//#define RUNTIME_ASSERT(x) assert(0 && x)
-#define RUNTIME_ASSERT(x) ((void)0)
+#define RUNTIME_ASSERT(x) assert(0 && x)
+//#define RUNTIME_ASSERT(x) ((void)0)
 #endif
 
 __device__ __forceinline__ void floatx4_to_e4m3x4(uint32_t *dest, float *source0, float *source1)
