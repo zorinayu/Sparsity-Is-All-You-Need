@@ -23,6 +23,7 @@
 #include "../wgmma.cuh"
 #include "../math.cuh"
 #include "attn_utils.cuh"
+#include <assert.h>
 
 #if (!defined(__CUDA_ARCH__) || (__CUDA_ARCH__ >= 900))
 #define SM90_ENABLED
@@ -32,8 +33,8 @@
 #define RUNTIME_ASSERT(x) __brkpt()
 #else
 //#include <assert.h>
-//#define RUNTIME_ASSERT(x) assert(0 && x)
-#define RUNTIME_ASSERT(x) ((void)0)
+#define RUNTIME_ASSERT(x) assert(0 && x)
+//#define RUNTIME_ASSERT(x) ((void)0)
 #endif
 
 template <int BlockMajorSize, int BlockMinorSize, bool swizzle=true, CUtensorMapL2promotion_enum promotion_mode=CU_TENSOR_MAP_L2_PROMOTION_NONE, typename T>
