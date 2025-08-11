@@ -56,7 +56,7 @@ python setup.py install   # or pip install -e .
 
 ## Usage Examples
 
-### Sparge+SageAttention with Any Block-Sparse Pattern
+### Sparge+SageAttention2++ with Any Block-Sparse Pattern
 
 ```python
 from spas_sage_attn import block_sparse_sage2_attn_cuda
