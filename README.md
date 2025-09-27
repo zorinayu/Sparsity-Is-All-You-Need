@@ -55,6 +55,14 @@ python setup.py install   # or pip install -e .
 
 
 ## Usage Examples
+### A Simple Usage Without Tuning for Any Model
+```python
+from spas_sage_attn import spas_sage2_attn_meansim_cuda
+
+attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.6, cdfthreshd=0.97, pvthreshd=15, is_causal=False)
+```
+
+You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values). **However, for optimal accuracy and sparsity performance, we recommend running a tuning process before inference, as described below.**  
 
 ### Sparge+SageAttention2++ with Any Block-Sparse Pattern
 
@@ -65,15 +73,6 @@ block_sparse_sage2_attn_cuda(q, k, v, mask_id=None, scale=None, pvthreshd=20, at
 ```
 
 In this API, we support computing $S=QK^T$ in any block sparse pattern per attention head. And we compute $PV$ multiplication with further acceleration. Specifically, the attention mask per head, `mask_id`, is of shape `(batch_size, num_qo_heads, qo_seq_len // BLOCK_M, kv_seq_len // BLOCK_N)`. Currently, the supported block size is aligned to that of SpargeAttention, which is (BLOCK_M = 128, BLOCK_N = 64). The lower `pvthreshd`, the more sparsity for `PV` Matmul and faster attention.
-
-### A Simple Usage Without Tuning for Any Model
-```python
-from spas_sage_attn import spas_sage2_attn_meansim_cuda
-
-attn_output = spas_sage2_attn_meansim_cuda(q, k, v, simthreshd1=0.6, cdfthreshd=0.98, is_causal=False)
-```
-
-You can tune `simthreshd1` and `cdfthreshd` to balance between attention accuracy (higher values) and sparsity (lower values). **However, for optimal accuracy and sparsity performance, we recommend running a tuning process before inference, as described below.**  
 
 
 ### CogVideoX
