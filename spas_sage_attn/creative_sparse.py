@@ -199,10 +199,35 @@ class CreativeSparseWrapper:
         
         # Model-specific configurations
         self.model_configs = {
-            'gpt2-large': {'max_length': 1024, 'temperature': 0.8},
-            'llama-2-7b': {'max_length': 2048, 'temperature': 0.7},
-            'cogvideox': {'max_length': 512, 'temperature': 0.9},
-            'flux': {'max_length': 256, 'temperature': 0.8}
+            # Text generation models
+            'gpt2-large': {'max_length': 1024, 'temperature': 0.8, 'guidance_scale': 7.5},
+            'llama-2-7b': {'max_length': 2048, 'temperature': 0.7, 'guidance_scale': 7.0},
+            'gpt-neo': {'max_length': 1024, 'temperature': 0.8, 'guidance_scale': 7.5},
+            'gpt-j': {'max_length': 1024, 'temperature': 0.8, 'guidance_scale': 7.5},
+            'palm': {'max_length': 2048, 'temperature': 0.7, 'guidance_scale': 7.0},
+            
+            # Video generation models
+            'cogvideox': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 7.5, 'num_frames': 49},
+            'hunyuan': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 7.5, 'num_frames': 49},
+            'wan': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 7.5, 'num_frames': 49},
+            'want2v': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 7.5, 'num_frames': 49},
+            
+            # Image generation models
+            'flux': {'max_length': 256, 'temperature': 0.8, 'guidance_scale': 7.5, 'height': 1024, 'width': 1024},
+            'flux-dev': {'max_length': 256, 'temperature': 0.8, 'guidance_scale': 7.5, 'height': 1024, 'width': 1024},
+            'stable-diffusion': {'max_length': 256, 'temperature': 0.8, 'guidance_scale': 7.5, 'height': 512, 'width': 512},
+            'imagen': {'max_length': 256, 'temperature': 0.8, 'guidance_scale': 7.5, 'height': 1024, 'width': 1024},
+            'dit-xl': {'max_length': 256, 'temperature': 0.8, 'guidance_scale': 7.5, 'height': 512, 'width': 512},
+            
+            # Music generation models
+            'musiclm': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 8.0, 'duration': 30},
+            'jukebox': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 8.0, 'duration': 30},
+            'musenet': {'max_length': 512, 'temperature': 0.9, 'guidance_scale': 8.0, 'duration': 30},
+            
+            # Code generation models
+            'codegen': {'max_length': 1024, 'temperature': 0.7, 'guidance_scale': 6.0},
+            'starcoder': {'max_length': 2048, 'temperature': 0.7, 'guidance_scale': 6.0},
+            'codet5': {'max_length': 1024, 'temperature': 0.7, 'guidance_scale': 6.0}
         }
     
     def generate_creative(
@@ -367,13 +392,36 @@ def find_optimal_sparsity(
     """
     # Task-specific optimal sparsities based on paper results
     task_sparsities = {
+        # Text generation tasks
         'creative_writing': 0.63,
         'poetry': 0.60,
         'ad_copy': 0.65,
+        'story_generation': 0.62,
+        'dialogue_generation': 0.58,
+        
+        # Image generation tasks
         'image_generation': 0.55,
+        'artistic_generation': 0.57,
+        'style_transfer': 0.52,
+        'photorealistic_generation': 0.50,
+        
+        # Video generation tasks
         'video_generation': 0.58,
+        'creative_video': 0.60,
+        'motion_generation': 0.56,
+        'scene_generation': 0.54,
+        
+        # Music generation tasks
         'music_composition': 0.58,
-        'code_generation': 0.51
+        'jazz_composition': 0.60,
+        'classical_composition': 0.55,
+        'electronic_music': 0.62,
+        
+        # Code generation tasks
+        'code_generation': 0.51,
+        'creative_programming': 0.53,
+        'algorithm_design': 0.49,
+        'debugging': 0.48
     }
     
     base_sparsity = task_sparsities.get(task_type, 0.6)
