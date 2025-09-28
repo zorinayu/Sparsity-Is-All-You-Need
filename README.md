@@ -305,14 +305,19 @@ def block_sparse_sage2_attn_cuda(
 
 ### Running Evaluations
 ```bash
-# Video generation evaluation (CogVideoX)
+# Original SpargeAttention evaluations
 python evaluate/cogvideo_example.py --use_spas_sage_attn --tune --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt
-
-# Image generation evaluation (Flux)
 python evaluate/flux_example.py --use_spas_sage_attn --tune --model_out_path evaluate/models_dict/flux_saved_state_dict.pt
-
-# Video generation evaluation (Want2V)
 python evaluate/wan_example.py --use_spas_sage_attn --tune
+
+# Creative-Sparse evaluations (NEW!)
+python evaluate/creative_sparse_cogvideo.py --use_creative_sparse --use_spas_sage_attn --auto_sparsity
+python evaluate/creative_sparse_flux.py --use_creative_sparse --use_spas_sage_attn --auto_sparsity
+python evaluate/creative_sparse_hunyuan.py --use_creative_sparse --use_spas_sage_attn --auto_sparsity
+python evaluate/creative_sparse_wan.py --use_creative_sparse --use_spas_sage_attn --auto_sparsity
+
+# Run all Creative-Sparse evaluations
+python evaluate/run_all_creative_sparse.py --models all --use_creative_sparse --use_spas_sage_attn
 
 # Creative-Sparse demonstration
 python examples/creative_generation_example.py --demo all
@@ -320,7 +325,7 @@ python examples/creative_generation_example.py --demo all
 
 ### Custom Benchmarking
 ```python
-from spas_sage_attn import CreativeSparseWrapper, find_optimal_sparsity, compute_quality_score
+from spas_sage_attn import CreativeSparseWrapper, QualityWeights, find_optimal_sparsity, compute_quality_score
 
 # Benchmark different sparsity levels
 sparsity_levels = [0.3, 0.5, 0.7, 0.9]
@@ -328,11 +333,18 @@ results = {}
 
 for sparsity in sparsity_levels:
     wrapper = CreativeSparseWrapper(
-        model_name="gpt2-large",
-        sparsity_schedule=(sparsity, 0.3)
+        model_name="cogvideox",  # or "flux", "hunyuan", "wan"
+        sparsity_schedule=(sparsity, 0.3),
+        quality_weights=QualityWeights(alpha=0.4, beta=0.3, gamma=0.3)
     )
     
     outputs = []
+    test_prompts = [
+        "A robot learning to paint with vibrant colors",
+        "A dancer moving through a city of light",
+        "A tree growing in reverse, leaves becoming butterflies"
+    ]
+    
     for prompt in test_prompts:
         output = wrapper.generate_creative(prompt, sparsity_level=sparsity)
         outputs.append(output)
@@ -345,8 +357,8 @@ for sparsity in sparsity_levels:
 
 # Find optimal sparsity
 optimal_sparsity = find_optimal_sparsity(
-    model_name="gpt2-large",
-    task_type="creative_writing",
+    model_name="cogvideox",
+    task_type="video_generation",
     compute_budget=0.8
 )
 ```
