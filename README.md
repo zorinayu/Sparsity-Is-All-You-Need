@@ -497,8 +497,19 @@ If you use this code or find our work valuable, please cite:
 @article{liu2024sparsity,
   title={Sparsity Is All You Need for High-Quality Creative Generation},
   author={Liu, Dong and Yu, Yanxuan},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
-  year={2024}
+  year={2025}
+}
+```
+
+### Related Work
+This implementation builds upon the following foundational work:
+
+```bibtex
+@inproceedings{zhang2025spargeattn,
+  title={Spargeattn: Accurate sparse attention accelerating any model inference},
+  author={Zhang, Jintao and Xiang, Chendong and Huang, Haofeng and Wei, Jia and Xi, Haocheng and Zhu, Jun and Chen, Jianfei},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2025}
 }
 ```
 

@@ -10,7 +10,7 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/dongliu/Sparsity-Is-All-You-Need.git
+git clone https://github.com/zorinayu/Sparsity-Is-All-You-Need.git
 cd Sparsity-Is-All-You-Need
 ```
 
