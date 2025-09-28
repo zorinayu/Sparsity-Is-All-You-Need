@@ -305,73 +305,130 @@ def block_sparse_sage2_attn_cuda(
 
 ### Running Evaluations
 ```bash
-# Text generation evaluation
-python evaluate/text_example.py --model gpt2-large --task creative_writing
+# Video generation evaluation (CogVideoX)
+python evaluate/cogvideo_example.py --use_spas_sage_attn --tune --model_out_path evaluate/models_dict/CogVideoX-2b_0.06_0.07.pt
 
-# Image synthesis evaluation  
-python evaluate/flux_example.py --model flux-dev --task artistic_generation
+# Image generation evaluation (Flux)
+python evaluate/flux_example.py --use_spas_sage_attn --tune --model_out_path evaluate/models_dict/flux_saved_state_dict.pt
 
-# Music composition evaluation
-python evaluate/music_example.py --model musiclm --task jazz_composition
+# Video generation evaluation (Want2V)
+python evaluate/wan_example.py --use_spas_sage_attn --tune
 
-# Code generation evaluation
-python evaluate/code_example.py --model starcoder --task creative_programming
+# Creative-Sparse demonstration
+python examples/creative_generation_example.py --demo all
 ```
 
 ### Custom Benchmarking
 ```python
-from creative_sparse import BenchmarkSuite
+from spas_sage_attn import CreativeSparseWrapper, find_optimal_sparsity, compute_quality_score
 
-benchmark = BenchmarkSuite(
-    tasks=["creative_writing", "poetry", "ad_copy"],
-    models=["gpt2-large", "llama-2-7b"],
-    sparsity_levels=[0.3, 0.5, 0.7, 0.9]
+# Benchmark different sparsity levels
+sparsity_levels = [0.3, 0.5, 0.7, 0.9]
+results = {}
+
+for sparsity in sparsity_levels:
+    wrapper = CreativeSparseWrapper(
+        model_name="gpt2-large",
+        sparsity_schedule=(sparsity, 0.3)
+    )
+    
+    outputs = []
+    for prompt in test_prompts:
+        output = wrapper.generate_creative(prompt, sparsity_level=sparsity)
+        outputs.append(output)
+    
+    quality_scores = compute_quality_score(outputs)
+    results[sparsity] = {
+        'avg_quality': np.mean(quality_scores),
+        'outputs': outputs
+    }
+
+# Find optimal sparsity
+optimal_sparsity = find_optimal_sparsity(
+    model_name="gpt2-large",
+    task_type="creative_writing",
+    compute_budget=0.8
 )
-
-results = benchmark.run_evaluation()
-benchmark.generate_report("results.json")
 ```
 
 ## Advanced Usage
 
 ### Custom Quality Functionals
 ```python
-from creative_sparse import QualityFunctional
+from spas_sage_attn import QualityFunctional, QualityWeights
 
 class CustomQuality(QualityFunctional):
     def __init__(self, custom_weights):
-        self.weights = custom_weights
+        super().__init__(custom_weights)
     
-    def compute_novelty(self, outputs, reference_data):
-        # Custom novelty computation
-        pass
+    def compute_novelty(self, outputs, reference_data=None):
+        # Custom novelty computation using your own metrics
+        # Example: Use semantic similarity with custom embeddings
+        return self._custom_novelty_score(outputs, reference_data)
     
     def compute_diversity(self, outputs):
-        # Custom diversity computation  
-        pass
+        # Custom diversity computation
+        # Example: Use custom n-gram diversity or semantic diversity
+        return self._custom_diversity_score(outputs)
     
     def compute_coherence(self, outputs):
         # Custom coherence computation
+        # Example: Use custom language model or rule-based scoring
+        return self._custom_coherence_score(outputs)
+    
+    def _custom_novelty_score(self, outputs, reference_data):
+        # Your custom implementation
+        pass
+    
+    def _custom_diversity_score(self, outputs):
+        # Your custom implementation
+        pass
+    
+    def _custom_coherence_score(self, outputs):
+        # Your custom implementation
         pass
 ```
 
-### Multi-Modal Generation
+### Custom Sparsity Control
 ```python
-from creative_sparse import MultiModalGenerator
+from spas_sage_attn import SparsityController, SparsityConfig
 
-generator = MultiModalGenerator(
-    text_model="llama-2-7b",
-    image_model="flux-dev",
-    music_model="musiclm"
+# Create custom sparsity configuration
+config = SparsityConfig(
+    attention_sparsity=0.7,
+    simthreshd1=0.5,
+    cdfthreshd=0.95,
+    pvthreshd=20
 )
 
-# Generate synchronized multi-modal content
-result = generator.generate_multimodal(
-    text_prompt="A jazz musician in a cyberpunk city",
-    include_image=True,
-    include_music=True,
-    duration_seconds=30
-)
+controller = SparsityController(config)
+
+# Get sparsity parameters for different levels
+for sparsity in [0.3, 0.5, 0.7, 0.9]:
+    params = controller.get_sparsity_params(sparsity)
+    print(f"Sparsity {sparsity}: {params}")
+```
+
+### Integration with Existing Models
+```python
+import torch
+from spas_sage_attn import spas_sage2_attn_meansim_cuda
+
+# Replace standard attention in your model
+class CustomModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.attention = spas_sage2_attn_meansim_cuda
+    
+    def forward(self, q, k, v, sparsity=0.6):
+        # Use sparse attention instead of standard attention
+        return self.attention(
+            q, k, v,
+            simthreshd1=0.6 * (1 - sparsity * 0.3),
+            cdfthreshd=0.97 * (1 - sparsity * 0.2),
+            pvthreshd=max(5, int(15 * (1 - sparsity * 0.4))),
+            is_causal=True
+        )
 ```
 
 ## Theoretical Background

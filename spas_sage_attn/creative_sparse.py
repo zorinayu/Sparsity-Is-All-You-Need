@@ -342,7 +342,7 @@ class CreativeSparseWrapper:
             q, k, v,
             simthreshd1=sparsity_params['simthreshd1'],
             cdfthreshd=sparsity_params['cdfthreshd'],
-            pvthreshd=sparsity_params['pvthreshd'],
+            pvthreshd=int(sparsity_params['pvthreshd']),
             is_causal=is_causal
         )
 
