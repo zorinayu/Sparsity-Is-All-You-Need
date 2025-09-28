@@ -197,43 +197,64 @@ output = wrapper.generate_creative(
 
 ### Core Classes
 
-#### `CreativeSparseGenerator`
-Main generator class implementing the two-stage Creative-Sparse algorithm.
+#### `CreativeSparseWrapper`
+Main wrapper class implementing the two-stage Creative-Sparse algorithm.
 
 ```python
-class CreativeSparseGenerator:
+class CreativeSparseWrapper:
     def __init__(
         self,
         model_name: str,
         sparsity_schedule: Tuple[float, float] = (0.7, 0.3),
-        quality_weights: Tuple[float, float, float] = (0.4, 0.3, 0.3),
+        quality_weights: Optional[QualityWeights] = None,
         sparsity_config: Optional[SparsityConfig] = None
     )
     
-    def generate(
+    def generate_creative(
         self,
         prompt: str,
         max_length: int = 200,
         num_candidates: int = 5,
         return_best: bool = True,
-        **kwargs
+        sparsity_level: Optional[float] = None
     ) -> Union[str, List[str]]
+    
+    def apply_sparse_attention(
+        self, 
+        q: torch.Tensor, 
+        k: torch.Tensor, 
+        v: torch.Tensor,
+        sparsity: float,
+        is_causal: bool = False
+    ) -> torch.Tensor
 ```
 
 #### `SparsityConfig`
 Configuration class for fine-tuning sparsity parameters.
 
 ```python
+@dataclass
 class SparsityConfig:
-    def __init__(
-        self,
-        attention_sparsity: float = 0.6,
-        token_pruning_rate: float = 0.4,
-        moe_expert_entropy: float = 0.8,
-        kv_reuse_ratio: float = 0.3,
-        temperature_schedule: str = "exponential",
-        nucleus_adaptation: str = "sigmoidal"
-    )
+    attention_sparsity: float = 0.6
+    token_pruning_rate: float = 0.4
+    moe_expert_entropy: float = 0.8
+    kv_reuse_ratio: float = 0.3
+    temperature_schedule: str = "exponential"
+    nucleus_adaptation: str = "sigmoidal"
+    simthreshd1: float = 0.6
+    cdfthreshd: float = 0.97
+    pvthreshd: int = 15
+```
+
+#### `QualityWeights`
+Weights for the quality functional Q(s) = α Novelty(s) + β Diversity(s) − γ Incoherence(s).
+
+```python
+@dataclass
+class QualityWeights:
+    alpha: float = 0.4  # Novelty weight
+    beta: float = 0.3   # Diversity weight
+    gamma: float = 0.3  # Incoherence weight
 ```
 
 ### Utility Functions
@@ -244,7 +265,8 @@ def compute_quality_score(
     outputs: List[str],
     novelty_weight: float = 0.4,
     diversity_weight: float = 0.3,
-    coherence_weight: float = 0.3
+    coherence_weight: float = 0.3,
+    reference_data: Optional[List[str]] = None
 ) -> List[float]
 ```
 
@@ -254,8 +276,29 @@ def find_optimal_sparsity(
     model_name: str,
     task_type: str,
     compute_budget: float,
-    quality_weights: Tuple[float, float, float] = (0.4, 0.3, 0.3)
+    quality_weights: Optional[QualityWeights] = None
 ) -> float
+```
+
+#### Sparse Attention Functions
+```python
+# Main sparse attention function
+def spas_sage2_attn_meansim_cuda(
+    q, k, v, 
+    simthreshd1=0.6, 
+    cdfthreshd=0.97, 
+    pvthreshd=15, 
+    is_causal=False,
+    return_sparsity=False
+) -> torch.Tensor
+
+# Block-sparse attention with custom patterns
+def block_sparse_sage2_attn_cuda(
+    q, k, v, 
+    mask_id=None,
+    pvthreshd=50,
+    return_sparsity=False
+) -> torch.Tensor
 ```
 
 ## Evaluation and Benchmarking
