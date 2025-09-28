@@ -111,26 +111,26 @@ attn_output = spas_sage2_attn_meansim_cuda(
 
 ### Creative-Sparse Integration
 ```python
-from spas_sage_attn import CreativeSparseWrapper
+from spas_sage_attn import CreativeSparseWrapper, QualityWeights
 from spas_sage_attn.autotune import find_optimal_sparsity
 
 # Initialize Creative-Sparse wrapper
 wrapper = CreativeSparseWrapper(
-    model_name="gpt2-large",
+    model_name="cogvideox",  # or "flux", "hunyuan", "wan", etc.
     sparsity_schedule=(0.7, 0.3),  # (divergence, refinement)
-    quality_weights=(0.4, 0.3, 0.3)  # (α, β, γ)
+    quality_weights=QualityWeights(alpha=0.4, beta=0.3, gamma=0.3)
 )
 
 # Find optimal sparsity for your task
 optimal_sparsity = find_optimal_sparsity(
-    model_name="gpt2-large",
-    task_type="creative_writing",
-    compute_budget=1.0
+    model_name="cogvideox",
+    task_type="video_generation",
+    compute_budget=0.8
 )
 
 # Generate with optimal sparsity
 output = wrapper.generate_creative(
-    prompt="Write a creative story about a robot learning to paint",
+    prompt="A robot learning to paint with vibrant colors",
     max_length=200,
     sparsity_level=optimal_sparsity
 )
