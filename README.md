@@ -477,7 +477,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ### Development Setup
 ```bash
-git clone https://github.com/dongliu/Sparsity-Is-All-You-Need.git
+git clone https://github.com/zorinayu/Sparsity-Is-All-You-Need.git
 cd Sparsity-Is-All-You-Need
 pip install -e ".[dev]"
 pre-commit install
